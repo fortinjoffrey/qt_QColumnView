@@ -8,6 +8,14 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+
+struct Vehicle {
+    QString name;
+    QString manufacturer;
+
+    Vehicle(const QString& pName, const QString& pManufacturer) : name(pName), manufacturer(pManufacturer) {}
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -21,5 +29,19 @@ private:
     QStandardItemModel _itemModel;
 
     void fillItemModelWithDummyNumbers();
+
+    /*
+     * Returns a map of the following format
+     *     key   : QString (company name)
+     *     value : QList<Vehicle> (company vehicles')
+     */
+    QMap<QString, QList<Vehicle>> fillManufacturersVehiclesMap();
+
+    /*
+     * Returns a list of vehicles
+     * These vehicles might come from an API or a database
+     */
+    QList<Vehicle> fillVehiclesList();
+    void printMap(QMap<QString, QList<Vehicle>> map);
 };
 #endif // MAINWINDOW_H
