@@ -8,11 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-//   fillItemModelWithDummyNumbers();
     QMap<QString, QList<Vehicle>> manufacturersVehiclesMap;
     manufacturersVehiclesMap = fillManufacturersVehiclesMap();
 
-    printMap(manufacturersVehiclesMap);
+    fillItemModelFromMap(manufacturersVehiclesMap);
 
    ui->columnView->setModel(&_itemModel);
 }
@@ -20,18 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::fillItemModelWithDummyNumbers()
-{
-    for(int i = 0; i < 100; i++) {
-        QStandardItem* row = new QStandardItem(QString("%1").arg(i));
-
-        for(int j = 0; j < 5; j++) {
-            row->appendRow(new QStandardItem(QString("%1").arg(j*i)));
-        }
-        _itemModel.appendRow(row);
-    }
 }
 
 QList<Vehicle> MainWindow::fillVehiclesList()
@@ -47,19 +34,23 @@ QList<Vehicle> MainWindow::fillVehiclesList()
     return vehicles;
 }
 
-void MainWindow::printMap(QMap<QString, QList<Vehicle> > map)
+
+void MainWindow::fillItemModelFromMap(QMap<QString, QList<Vehicle>> map)
 {
     QMap<QString, QList<Vehicle>>::const_iterator iterator = map.constBegin();
 
     while (iterator != map.constEnd()) {
 
-        qDebug() << "Manufacturer name : " + iterator.key();
+        QStandardItem* manufacturerRow = new QStandardItem(iterator.key());
 
         const QList<Vehicle> vehicles = iterator.value();
 
         foreach (Vehicle vehicle, vehicles) {
-            qDebug() << "   vehicle name : " + vehicle.name;
+            manufacturerRow->appendRow(new QStandardItem(vehicle.name));
         }
+
+        _itemModel.appendRow(manufacturerRow);
+
         ++iterator;
     }
 }

@@ -28,8 +28,6 @@ private:
     Ui::MainWindow *ui;
     QStandardItemModel _itemModel;
 
-    void fillItemModelWithDummyNumbers();
-
     /*
      * Returns a map of the following format
      *     key   : QString (company name)
@@ -42,6 +40,10 @@ private:
      * These vehicles might come from an API or a database
      */
     QList<Vehicle> fillVehiclesList();
-    void printMap(QMap<QString, QList<Vehicle>> map);
+
+    /*
+     * Fill the QStandardItemModel from map model
+     */
+    void fillItemModelFromMap(QMap<QString, QList<Vehicle>> map);
 };
 #endif // MAINWINDOW_H
