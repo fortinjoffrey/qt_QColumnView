@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +18,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QStandardItemModel _itemModel;
+
+    void fillItemModelWithDummyNumbers();
 };
 #endif // MAINWINDOW_H
